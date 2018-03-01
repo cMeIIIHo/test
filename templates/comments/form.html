@@ -1,0 +1,49 @@
+{% load comments i18n %}
+
+<!-- check if this form for an object, or for another comment  -->
+{% if node %}
+    <form id="{{ node.id }}" class="dc-hidden_element" action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+{% else %}
+    <form action="{% comment_form_target %}" method="post">{% csrf_token %}
+{% endif %}
+
+<div>
+    <input type="hidden" name="next" value="{{ request.path }}"/>
+</div>
+
+    <div>
+        Имя:
+    </div>
+    <div>
+        {{ form.name }}
+    </div>
+    <div>
+        E-mail:
+    </div>
+    <div>
+        {{ form.email }}
+    </div>
+    <div>
+        Комментарий:
+    </div>
+    <div>
+        {{ form.comment }}
+    </div>
+
+{{ form.honeypot }}
+{{ form.object_pk }}
+{{ form.content_type }}
+{{ form.timestamp }}
+{{ form.security_hash }}
+{% if node %}
+    <input type="hidden" name="parent" id="parent_id" value="{{ node.id }}"/>
+{% elif form.parent %}
+    {{ form.parent }}
+{% endif %}
+
+{#    <p class="submit">#}
+{#        <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}"/>#}
+{#    </p>#}
+<button type="submit" name="post" class="submit-post btn btn-primary">Опубликовать</button>
+</form>

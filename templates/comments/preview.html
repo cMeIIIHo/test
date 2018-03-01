@@ -1,0 +1,62 @@
+{% extends "comments/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Preview your comment" %}{% endblock %}
+
+{% block content %}
+    {% load comments %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'django_comments/css/show_comments.css' %}">
+
+    {% if form.errors %}
+        <h2>{% blocktrans count counter=form.errors|length %}Please correct the error below{% plural %}Please
+            correct the errors below{% endblocktrans %}</h2>
+    {% endif %}
+
+    <div class="dc-comment_block">
+        <form action="{% comment_form_target %}" method="post">{% csrf_token %}
+            <div><input type="hidden" name="next" value="{{ request.path }}"/></div>
+
+            {{ form.non_field_errors }}
+            <div class="container">
+                <div>{{ form.name.errors }}</div>
+                <div>
+                    Имя:
+                </div>
+                <div>
+                    {{ form.name }}
+                </div>
+                <div>{{ form.email.errors }}</div>
+                <div>
+                    E-mail:
+                </div>
+                <div>
+                    {{ form.email }}
+                </div>
+                <div>{{ form.comment.errors }}</div>
+                <div>
+                    Комментарий:
+                </div>
+                <div>
+                    {{ form.comment }}
+                </div>
+            </div>
+
+            {{ form.honeypot }}
+            {{ form.object_pk }}
+            {{ form.content_type }}
+            {{ form.timestamp }}
+            {{ form.security_hash }}
+            {% if node.id %}
+                <input type="hidden" name="parent" id="parent_id" value="{{ node.id }}"/>
+            {% elif form.parent %}
+                {{ form.parent }}
+            {% endif %}
+            {#    <p class="submit">#}
+            {#        <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}"/>#}
+            {#    </p>#}
+            <button type="submit" name="post" class="submit-post btn btn-primary">Опубликовать</button>
+        </form>
+    </div>
+{% endblock %}

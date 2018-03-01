@@ -1,0 +1,21 @@
+.dc-hidden_element {
+    display: none;
+}
+.dc-comment {
+    margin-left: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px #267bc0 inset;
+    border-radius: 6px;
+}
+.dc-comment_block form {
+    margin-top: 20px;
+    margin-left: 15px;
+    max-width: 500px;
+}
+.dc-answer-button {
+    padding: 0 3px;
+}
+#id_honeypot {
+    display: none;
+}
